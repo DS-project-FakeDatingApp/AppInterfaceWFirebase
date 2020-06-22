@@ -1,6 +1,7 @@
 package com.example.dating.Profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.dating.Main.LoginActivity;
 import com.example.dating.R;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +51,7 @@ public class Profile_Activity extends AppCompatActivity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("server/saving-data/fireblog");
     DatabaseReference usersRef = ref.child("users");
+    GoogleSignInClient mGoogleSignInClient;
 
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -56,7 +60,7 @@ public class Profile_Activity extends AppCompatActivity {
     //private ArrayAdapter<String> adapter;
     private EditText edittxt;
 
-    Button add1, add2, add3, add4, add5, save;
+    Button add1, add2, add3, add4, add5, save, logout;
     EditText getabout, displayName;
 
     private static ArrayList<String> interestslist = new ArrayList<String>();
@@ -82,6 +86,7 @@ public class Profile_Activity extends AppCompatActivity {
         add3 = findViewById(R.id.add3);
         add5 = findViewById(R.id.add5);
         save = findViewById(R.id.saveinfo);
+        logout = findViewById(R.id.logout);
 
         getabout = findViewById(R.id.editabout);
         displayName = findViewById(R.id.displayName);
@@ -109,6 +114,12 @@ public class Profile_Activity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 saveInfo();
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                logout();
             }
         });
 
@@ -255,6 +266,13 @@ public class Profile_Activity extends AppCompatActivity {
                 });
         Toast.makeText(Profile_Activity.this, "Successfully Updated",
                 Toast.LENGTH_SHORT).show();
+    }
+
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        mGoogleSignInClient.signOut();
+        Intent intent = new Intent(Profile_Activity.this, LoginActivity.class);
+        startActivity(intent);
     }
 
 }

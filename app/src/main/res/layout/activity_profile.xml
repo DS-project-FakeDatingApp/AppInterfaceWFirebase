@@ -59,6 +59,14 @@
                                     android:text="Save changes"
                                     android:textColor="@color/white" />
 
+                                <Button
+                                    android:id="@+id/logout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="@color/smoke_pink"
+                                    android:text="Logout"
+                                    android:textColor="@color/white" />
+
                                 <androidx.cardview.widget.CardView
                                     android:layout_width="match_parent"
                                     android:layout_height="100dp"
